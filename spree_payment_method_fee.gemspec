@@ -3,8 +3,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_payment_method_fee'
   s.version     = '1.3.3.beta'
-  s.summary     = 'TODO: Add gem summary here'
-  s.description = 'TODO: Add (optional) gem description here'
+  s.summary     = 'Allows you to add a fee to payment methods'
+  s.description = 'Allows you to add a fee to payment methods'
   s.required_ruby_version = '>= 1.8.7'
 
   s.author    = 'FreeRunning Technologies'
