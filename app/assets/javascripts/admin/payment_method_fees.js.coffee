@@ -1,7 +1,7 @@
 $ ->
   $('#add-payment-method-fee').on 'click', ->
     id = new Date().getTime()
-    html = $(this).data('form').replace('XYZ', id )
+    html = $(this).data('form').replace(/XYZ/g, id )
     $('#payment-methods').append(html)
 
   $('.remove-payment-method-fee').on 'click', ->
