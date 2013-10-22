@@ -1,23 +1,14 @@
-<% id ||= nil %>
-<% amount ||= nil %>
-<% currency ||= nil %>
-
-<% field_name = "payment_method[spree_payment_method_fees_attributes][#{id||'XYZ'}]" %>
 <div class='currency-fields'>
-  <% if id %>
-    <%= hidden_field_tag( "#{field_name}[id]", id ) %>
-  <% end %>
-  <div class="three columns">
-    <%= label_tag nil, t(:amount) %>
-    <%= text_field_tag( "#{field_name}[amount]", amount ) %>
+  <div class="alpha three columns">
+    <%= f.label :amount %>
+    <%= f.text_field :amount, size: 0 %>
   </div>
   <div class="three columns">
-    <%= label_tag nil, t(:currency) %>
-    <%= text_field_tag( "#{field_name}[currency]", currency ) %>
+    <%= f.label :currency %>
+    <%= f.text_field :currency, size: 0 %>
   </div>
-  <div class="one column">
-    <br/>
-    <%= link_to 'remove', '#', class: 'remove-payment-method-fee' %>
+  <div class="omega two column">
+    <%= link_to '', 'javascript:', class: 'remove-payment-method-fee icon-trash' %>
+    <%= f.hidden_field :_destroy %>
   </div>
-  <%= hidden_field_tag( "#{field_name}[_destroy]", 'false' ) %>
 </div>

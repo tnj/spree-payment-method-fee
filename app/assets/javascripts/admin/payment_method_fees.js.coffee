@@ -1,10 +1,12 @@
 $ ->
-  $('#add-payment-method-fee').on 'click', ->
+  $('#add-payment-method-fee').on 'click', (e)->
     id = new Date().getTime()
-    html = $(this).data('form').replace(/XYZ/g, id )
-    $('#payment-methods').append(html)
+    html = $(@).data('fields').replace(/XYZ/g, id )
+    $('#fee-fields').append(html)
+    e.preventDefault()
 
-  $('.container').on 'click', '.remove-payment-method-fee', ->
-    $(this).prev('input[type=hidden]').val(1)
-    $(this).closest('.currency-fields').hide()
+  $('.container').on 'click', '.remove-payment-method-fee', (e)->
+    $(@).next('[name*=_destroy]').val(true)
+    $(@).closest('.currency-fields').hide()
+    e.preventDefault()
 

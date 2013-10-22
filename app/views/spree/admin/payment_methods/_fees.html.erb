@@ -1,14 +1,23 @@
-<div id='payment-methods'>
+<div id='payment-methods-fees'>
 <div class="field">
   <%= f.label :payment_method_fees, t(:payment_method_fees) %>
 </div>
-<% @payment_method.fees.each do |fee|%>
-  <%= render 'spree/admin/payment_methods/fee_fields', id: fee.id, amount: fee.amount, currency: fee.currency %>
-<% end %>
+
+<div id='fee-fields'>
+  <%= f.fields_for :fees do |ff| %>
+    <%= render 'spree/admin/payment_methods/fee_fields', f: ff %>
+  <% end %>
+</div>
 </div>
 <div class="clear"></div>
 <div class="field">
-  <div class="three columns">
-    <%= button t(:add), 'icon-plus', 'button', id: 'add-payment-method-fee', data: { form: render('spree/admin/payment_methods/fee_fields').gsub("\n","") } %>
+  <div class="alpha eight columns">
+    <% new_fee = Spree::PaymentMethodFee.new(payment_method_id: f.object.id) %>
+    <% fields = f.fields_for(:fees, new_fee, child_index: 'XYZ') do |ff| %>
+      <% render('spree/admin/payment_methods/fee_fields', f: ff) %>
+    <% end %>
+    <%= link_to 'javascript:', id: 'add-payment-method-fee', class: 'button', data: {fields: fields.gsub("\n", '')} do %>
+      <i class='icon-plus'></i> <%= t :add %>
+    <% end %>
   </div>
 </div>

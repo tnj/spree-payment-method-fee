@@ -6,7 +6,7 @@ describe Spree::PaymentMethodFee do
 
   describe 'creating a payment method fee' do
     subject do
-      Spree::PaymentMethodFee.new( spree_payment_method_id: payment_method.id, amount: 1, currency: 'USD' )
+      Spree::PaymentMethodFee.new( payment_method_id: payment_method.id, amount: 1, currency: 'USD' )
     end
 
     context 'with an payment method that supports payment profiles' do
@@ -16,7 +16,7 @@ describe Spree::PaymentMethodFee do
       context 'when a fee already exists on the payment method with the same currency' do
         before do
           Spree::PaymentMethodFee.create(
-            spree_payment_method_id: payment_method.id,
+            payment_method_id: payment_method.id,
             amount: 1,
             currency: 'USD'
           )
@@ -36,7 +36,7 @@ describe Spree::PaymentMethodFee do
     let(:payment_profiles_supported) { true }
 
     before do
-      Spree::PaymentMethodFee.create( spree_payment_method_id: payment_method.id, currency: 'USD', amount: 200 )
+      Spree::PaymentMethodFee.create( payment_method_id: payment_method.id, currency: 'USD', amount: 200 )
       # create a 'fee' to verify it gets blown away when we call adjust
       order.adjustments.create amount: 10, label: 'fee'
       order.stub payment_method: payment_method
