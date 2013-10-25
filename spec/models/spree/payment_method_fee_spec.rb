@@ -31,17 +31,17 @@ describe Spree::PaymentMethodFee do
     end
   end
 
-  context '#adjust!' do
+  context '.apply_adjustment_to_order' do
     let(:order) { create :order }
     let(:payment_profiles_supported) { true }
+    let(:fee) { Spree::PaymentMethodFee.create( payment_method_id: payment_method.id, currency: 'USD', amount: 200 ) }
 
     before do
-      Spree::PaymentMethodFee.create( payment_method_id: payment_method.id, currency: 'USD', amount: 200 )
       # create a 'fee' to verify it gets blown away when we call adjust
       order.adjustments.create amount: 10, label: 'fee'
       order.stub payment_method: payment_method
 
-      Spree::PaymentMethodFee.adjust!(order)
+      fee.add_adjustment_to_order(order)
     end
 
     context "with existing fees" do

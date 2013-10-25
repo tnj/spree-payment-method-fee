@@ -15,11 +15,16 @@ class Spree::PaymentMethodFee < ActiveRecord::Base
     end
   end
 
-  def self.adjust!(order)
+  def add_adjustment_to_order(order)
     order.adjustments.where( label: 'fee' ).destroy_all
 
-    if fee = order.payment_method.fees.where(currency: order.currency).first
-      order.adjustments.create( amount: fee.amount, label: 'fee' )
-    end
+    adjustment = order.adjustments.new
+    adjustment.source = order
+    adjustment.amount = self.amount
+    adjustment.label = 'fee'
+    adjustment.mandatory = true
+    adjustment.eligible = true
+
+    adjustment.save!
   end
 end
