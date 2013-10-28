@@ -52,4 +52,17 @@ describe Spree::PaymentMethodFee do
       specify { subject.first.label.should == 'fee' }
     end
   end
+
+  context '.add_adjustment_to_order' do
+    let(:order) { create :order }
+    let(:payment_profiles_supported) { false }
+    let(:fee) { Spree::PaymentMethodFee.create( payment_method_id: payment_method.id, currency: 'USD', amount: 200 ) }
+    before do
+      fee.add_adjustment_to_order(order)
+    end
+
+    subject { order }
+    specify { order.adjustments.size.should == 1 }
+    specify { order.adjustments.first.label.should == "fee" }
+  end
 end

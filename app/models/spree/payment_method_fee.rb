@@ -16,7 +16,7 @@ class Spree::PaymentMethodFee < ActiveRecord::Base
   end
 
   def add_adjustment_to_order(order)
-    order.adjustments.where( label: 'fee' ).destroy_all
+    order.destroy_fee_adjustments_for_order
 
     adjustment = order.adjustments.new
     adjustment.source = order
