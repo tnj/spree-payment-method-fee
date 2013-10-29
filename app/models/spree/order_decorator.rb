@@ -3,7 +3,7 @@ module Spree
     after_update :update_payment_method_fee
 
     def update_payment_method_fee
-      if (fee = self.payment_method.fees.where(currency: self.currency).first).present?
+      if self.payment_method.present? && (fee = self.payment_method.fees.where(currency: self.currency).first).present?
         fee.add_adjustment_to_order(self)
       else
         destroy_fee_adjustments_for_order
