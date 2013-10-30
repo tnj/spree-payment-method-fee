@@ -26,6 +26,7 @@ RSpec.configure do |config|
   # visit spree.admin_path
   # current_path.should eql(spree.products_path)
   config.include Spree::Core::UrlHelpers
+  config.include Spree::Core::TestingSupport::ControllerRequests
 
   # == Mock Framework
   #
