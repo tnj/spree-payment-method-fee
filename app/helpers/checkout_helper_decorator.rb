@@ -6,7 +6,7 @@ module Spree
 
       return "" unless fee
 
-      "(#{Money.new( fee.amount, { currency: currency } ).to_s})"
+      Money.new( fee.amount, { currency: currency } ).to_s
     end
   end
 end
