@@ -17,6 +17,8 @@ module Spree
         end
       end
 
+      self.update_totals
+
       adjustments.reload
     end
 
