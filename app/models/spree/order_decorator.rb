@@ -1,7 +1,7 @@
 module Spree
   Order.class_eval do
 
-    set_callback :updating_from_params, :before, :update_payment_method_fee
+    set_callback :updating_from_params, :before, :update_payment_method_fee, prepend: true
 
     def update_payment_method_fee
       return unless @updating_params['order'].present?
