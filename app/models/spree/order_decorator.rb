@@ -1,16 +1,20 @@
 module Spree
   Order.class_eval do
-    after_update :update_payment_method_fee
+
+    set_callback :updating_from_params, :before, :update_payment_method_fee
 
     def update_payment_method_fee
-      return unless self.payment_method.present?
-
-      fee = self.payment_method.fees.where(currency: self.currency).first
+      return unless @updating_params['order'].present?
+      payment_attributes = @updating_params['order']['payments_attributes']
+      return unless payment_attributes.present?
 
       destroy_fee_adjustments_for_order
 
-      if fee.present?
-        fee.add_adjustment_to_order(self)
+      payment_attributes.each do |payment|
+        payment_method = PaymentMethod.find(payment[:payment_method_id])
+        payment_method.fees.where(currency: self.currency).first.try do |fee|
+          fee.add_adjustment_to_order(self)
+        end
       end
 
       adjustments.reload
