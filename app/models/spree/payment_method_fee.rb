@@ -1,7 +1,7 @@
 class Spree::PaymentMethodFee < ActiveRecord::Base
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
-  attr_accessible :amount, :currency, :payment_method_id
+  attr_accessor :amount, :currency, :payment_method_id
 
   validates :currency, uniqueness: {scope: :payment_method_id}
   validate :payment_method_confirmable
