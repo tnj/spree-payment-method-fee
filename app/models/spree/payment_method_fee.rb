@@ -1,8 +1,6 @@
 class Spree::PaymentMethodFee < ActiveRecord::Base
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
-  attr_accessor :amount, :currency, :payment_method_id
-
   validates :currency, uniqueness: {scope: :payment_method_id}
   validate :payment_method_confirmable
 
@@ -18,13 +16,11 @@ class Spree::PaymentMethodFee < ActiveRecord::Base
   def add_adjustment_to_order(order)
     order.destroy_fee_adjustments_for_order
 
-    adjustment = order.adjustments.new
-    adjustment.source = order
-    adjustment.amount = self.amount
-    adjustment.label = 'fee'
-    adjustment.mandatory = true
-    adjustment.eligible = true
-
-    adjustment.save!
+    order.adjustments.create! source: order,
+                              order: order,
+                              amount: self.amount,
+                              label: 'fee',
+                              mandatory: true,
+                              eligible: true
   end
 end
