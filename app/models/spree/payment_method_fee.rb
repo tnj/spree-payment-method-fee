@@ -2,7 +2,7 @@ class Spree::PaymentMethodFee < ActiveRecord::Base
   belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
 
   validates :currency, uniqueness: {scope: :payment_method_id}
-  validate :payment_method_confirmable
+  # validate :payment_method_confirmable
 
   # If a payment method isn't comfirmable then this extension would sneakily
   # add a fee to an order without showing the user the final total. make sure
