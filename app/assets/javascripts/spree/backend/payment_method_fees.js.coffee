@@ -5,7 +5,7 @@ $ ->
     $('#fee-fields').append(html)
     e.preventDefault()
 
-  $('.container').on 'click', '.remove-payment-method-fee', (e)->
+  $('body').on 'click', '.remove-payment-method-fee', (e)->
     $(@).next('[name*=_destroy]').val(true)
     $(@).closest('.currency-fields').hide()
     e.preventDefault()
